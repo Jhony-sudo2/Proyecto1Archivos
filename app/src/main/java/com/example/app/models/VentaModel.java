@@ -5,51 +5,55 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Venta")
+@Table(name = "venta",schema = "ventas")
 public class VentaModel {
     @Id
-    private String Factura;
-    private String Cliente;
-    private String Empleado;
-    private int Total;
-    private int TotalDescuento;
-    private String Descripcion;
+    private String factura;
+    private String cliente;
+    private int empleado;
+    private int total;
+    private int totaldescuento;
+    private String sucursal;
     public String getFactura() {
-        return Factura;
+        return factura;
     }
     public void setFactura(String factura) {
-        Factura = factura;
+        this.factura = factura;
     }
     public String getCliente() {
-        return Cliente;
+        return cliente;
     }
     public void setCliente(String cliente) {
-        Cliente = cliente;
+        this.cliente = cliente;
     }
-    public String getEmpleado() {
-        return Empleado;
+    public int getEmpleado() {
+        return empleado;
     }
-    public void setEmpleado(String empleado) {
-        Empleado = empleado;
+    public void setEmpleado(int empleado) {
+        this.empleado = empleado;
     }
     public int getTotal() {
-        return Total;
+        return total;
     }
     public void setTotal(int total) {
-        Total = total;
+        this.total = total;
     }
-    public int getTotalDescuento() {
-        return TotalDescuento;
+    public int getTotaldescuento() {
+        return totaldescuento;
     }
-    public void setTotalDescuento(int totalDescuento) {
-        TotalDescuento = totalDescuento;
+    public void setTotaldescuento(int totaldescuento) {
+        this.totaldescuento = totaldescuento;
     }
-    public String getDescripcion() {
-        return Descripcion;
+    public String getSucursal() {
+        return sucursal;
     }
-    public void setDescripcion(String descripcion) {
-        Descripcion = descripcion;
+    public void setSucursal(String sucursal) {
+        this.sucursal = sucursal;
     }
+
+    
+
+
 
     
 }

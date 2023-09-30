@@ -1,50 +1,62 @@
 package com.example.app.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "Descripcion")
-public class DescripcionModel {
+import com.example.app.Llaves.LlaveDescripcion;
 
+@Entity
+@IdClass(LlaveDescripcion.class)
+@Table(name = "descripcion",schema = "ventas")
+public class DescripcionModel {
     @Id
-    private String Factura;
-    private String Producto;
-    private int Cantidad;
-    private int Total;
-    private String Sucursal;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true,nullable = false)
+    private Integer id;
+    @Id
+    private String factura;
+    private String producto;
+    private int cantidad;
+    private int total;
+    
+
     public String getFactura() {
-        return Factura;
+        return factura;
     }
     public void setFactura(String factura) {
-        Factura = factura;
+        this.factura = factura;
     }
     public String getProducto() {
-        return Producto;
+        return producto;
     }
     public void setProducto(String producto) {
-        Producto = producto;
-    }
-    public int getCantidad() {
-        return Cantidad;
-    }
-    public void setCantidad(int cantidad) {
-        Cantidad = cantidad;
-    }
-    public int getTotal() {
-        return Total;
-    }
-    public void setTotal(int total) {
-        Total = total;
-    }
-    public String getSucursal() {
-        return Sucursal;
-    }
-    public void setSucursal(String sucursal) {
-        Sucursal = sucursal;
+        this.producto = producto;
     }
 
-    
+    public int getCantidad() {
+        return cantidad;
+    }
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+    public int getTotal() {
+        return total;
+    }
+    public void setTotal(int total) {
+        this.total = total;
+    }
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+        
 
 }

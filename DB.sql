@@ -108,23 +108,24 @@ CREATE TABLE manejoproducto.Estantes(
 
 CREATE TABLE ventas.Venta(
     Factura VARCHAR(8) NOT NULL,
-    Cliente VARCHAR(9) NOT NULL,
-    Empleado VARCHAR(10) NOT NULL,
+    Cliente VARCHAR(9),
+    Empleado INT NOT NULL,
     Total INT NOT NULL,
     TotalDescuento INT NOT NULL,
-    Descripcion VARCHAR(8) NOT NULL,
-
-    PRIMARY KEY(Factura)
+    Sucursal VARCHAR(10) NOT NULL,
+    PRIMARY KEY(Factura),
+    FOREIGN KEY(Cliente) REFERENCES rcliente.Cliente(NIT),
+    FOREIGN KEY(Empleado) REFERENCES rtienda.Empleado(Id),
+    FOREIGN KEY(Sucursal) REFERENCES rtienda.Sucursal(Id)
 );
 
 CREATE TABLE ventas.Descripcion(
+    Id SERIAL,
     Factura VARCHAR(8) NOT NULL,
     Producto VARCHAR(10) NOT NULL,
-    Cantida INT NOT NULL,
+    Cantidad INT NOT NULL,
     Total   INT,
-    Sucursal VARCHAR(10) NOT NULL,
-    PRIMARY KEY(Producto,Factura),
-    FOREIGN KEY(Sucursal) REFERENCES rtienda.Sucursal(Id),
+    PRIMARY KEY(Id,Factura),
     FOREIGN KEY(Producto) REFERENCES manejoproducto.Producto(Id)
 );
 
@@ -179,13 +180,19 @@ GRANT USAGE ON SCHEMA manejoproducto TO Inventario;
 GRANT USAGE ON SCHEMA rtienda,manejoproducto,rcliente,ventas TO  Administrador;
 GRANT USAGE ON SCHEMA rtienda TO Administrador;
 GRANT USAGE ON SCHEMA manejoproducto TO Administrador;
+GRANT USAGE ON SCHEMA rcliente TO Administrador;
+GRANT USAGE ON SCHEMA ventas TO Administrador;
+GRANT USAGE, SELECT ON ventas.descripcion_id_seq TO Administrador;
 
 --Falta asignarle acciones que podra utilizar
 GRANT INSERT,UPDATE,SELECT ON TABLE rtienda.Usuario  TO Administrador;
 GRANT INSERT,UPDATE,SELECT ON TABLE rtienda.Empleado TO Administrador;
+GRANT INSERT,UPDATE,SELECT,DELETE ON TABLE rtienda.Empleadonousuario TO Administrador;
 GRANT INSERT,UPDATE,SELECT ON TABLE rtienda.Sucursal TO Administrador;
+GRANT INSERT,UPDATE,SELECT ON TABLE rcliente.Cliente TO Administrador;
 GRANT INSERT,UPDATE,SELECT ON TABLE manejoproducto.producto TO Administrador;
-
+GRANT INSERT,UPDATE,SELECT ON TABLE ventas.Descripcion TO Administrador;
+GRANT INSERT,UPDATE,SELECT ON TABLE ventas.venta TO Administrador;
 
 GRANT UPDATE ON TABLE rcliente.Cliente TO Administrador;
 GRANT INSERT ON TABLE rcliente.Tarjeta TO Administrador;
@@ -214,3 +221,7 @@ psql -h localhost -U usuario1 -d tienda
 
 
 
+SELECT e.Id AS id, e.CUI, e.Nombre AS nombre, e.Apellido, e.Nacimiento, e.Telefono, e.Direccion, e.Sueldo, e.Sucursal
+FROM rtienda.Empleado e
+LEFT JOIN rtienda.Usuario u ON e.Id = u.Empleado
+WHERE u.Empleado IS  NULL

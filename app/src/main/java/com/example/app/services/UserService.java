@@ -1,6 +1,7 @@
 package com.example.app.services;
 
  import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,13 @@ public class UserService {
 
 
     public UserModel getUsuario(UserModel usuario){
-        return (UserModel) userRepositorie.findByNombre(usuario.getNombre());   
+        UserModel tmp = (UserModel)userRepositorie.findByNombre(usuario.getNombre());
+        if(tmp != null){
+            if(tmp.getContrasena().equals(usuario.getContrasena())){
+                return tmp;
+            }else return null;
+        }else return null;
+
     }
 
 

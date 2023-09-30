@@ -29,9 +29,7 @@ public class UserController {
 
     @PostMapping
     public UserModel getUser(@RequestBody UserModel usuario){
-        UserModel tmp = this.userService.getUsuario(usuario);
-        if(tmp!=null & tmp.getContrasena().equals(usuario.getContrasena())) return tmp;
-        else return null;
+        return this.userService.getUsuario(usuario);
     }
    
 
