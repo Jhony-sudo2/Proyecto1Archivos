@@ -5,32 +5,35 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Inventario")
+@Table(name = "inventario",schema = "manejoproducto")
 public class InventarioModel {
+
+    private String sucursal;
+
     @Id
-    private String Sucursal;
-    private String Producto;
-    private int Existencia;
-    
+    private String producto;
+    private int existencia;
     public String getSucursal() {
-        return Sucursal;
+        return sucursal;
     }
     public void setSucursal(String sucursal) {
-        Sucursal = sucursal;
+        this.sucursal = sucursal;
     }
     public String getProducto() {
-        return Producto;
+        return producto;
     }
     public void setProducto(String producto) {
-        Producto = producto;
+        this.producto = producto;
     }
     public int getExistencia() {
-        return Existencia;
+        return existencia;
     }
     public void setExistencia(int existencia) {
-        Existencia = existencia;
+        this.existencia = existencia;
     }
+
 
     
 
+    
 }

@@ -61,7 +61,7 @@ CREATE TABLE rtienda.Usuario(
 CREATE TABLE manejoproducto.Producto(
     Id VARCHAR(10) NOT NULL,
     Nombre VARCHAR(20) NOT NULL,
-    Marca VARCHAR(10) NOT NULL,
+    Marca VARCHAR(30) NOT NULL,
     Sucursal VARCHAR(10) NOT NULL,
     Precio DECIMAL NOT NULL,
     Pasillo VARCHAR(3) NOT NULL,
@@ -74,12 +74,12 @@ CREATE TABLE rcliente.Cliente(
     Apellido VARCHAR(20) NOT NULL,
     Telefono VARCHAR(8) NOT NULL,
     NIT     VARCHAR(9) NOT NULL,
-    Gastado INT  DEFAULT 0,
+    Gastado DECIMAL(10,2)  DEFAULT 0,
     PRIMARY KEY(NIT)
 );
 
 CREATE TABLE rcliente.Tarjeta(
-    Id VARCHAR(10),
+    Id Serial,
     Cliente VARCHAR(9) NOT NULL,
     Tipo INT NOT NULL,
     Puntos INT NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE manejoproducto.Inventario(
     Sucursal VARCHAR(10) NOT NULL,
     Producto VARCHAR(10) NOT NULL,
     Existencia INT NOT NULL,
-    PRIMARY KEY(Sucursal,Producto),
+    PRIMARY KEY(Producto),
     FOREIGN KEY(Sucursal) REFERENCES rtienda.Sucursal(Id),
     FOREIGN KEY(Producto) REFERENCES manejoproducto.Producto(Id)
 );
@@ -100,7 +100,7 @@ CREATE TABLE manejoproducto.Estantes(
     Sucursal VARCHAR(10) NOT NULL,
     Producto VARCHAR(10) NOT NULL,
     Cantida  INT NOT NULL,
-    PRIMARY KEY(Sucursal,Producto),
+    PRIMARY KEY(Producto),
     FOREIGN KEY(Sucursal) REFERENCES rtienda.Sucursal(Id),
     FOREIGN KEY(Producto) REFERENCES manejoproducto.Producto(Id)
 );
@@ -183,6 +183,7 @@ GRANT USAGE ON SCHEMA manejoproducto TO Administrador;
 GRANT USAGE ON SCHEMA rcliente TO Administrador;
 GRANT USAGE ON SCHEMA ventas TO Administrador;
 GRANT USAGE, SELECT ON ventas.descripcion_id_seq TO Administrador;
+GRANT USAGE, SELECT ON rcliente.tarjeta_id_seq TO Administrador;
 
 --Falta asignarle acciones que podra utilizar
 GRANT INSERT,UPDATE,SELECT ON TABLE rtienda.Usuario  TO Administrador;
@@ -190,7 +191,10 @@ GRANT INSERT,UPDATE,SELECT ON TABLE rtienda.Empleado TO Administrador;
 GRANT INSERT,UPDATE,SELECT,DELETE ON TABLE rtienda.Empleadonousuario TO Administrador;
 GRANT INSERT,UPDATE,SELECT ON TABLE rtienda.Sucursal TO Administrador;
 GRANT INSERT,UPDATE,SELECT ON TABLE rcliente.Cliente TO Administrador;
+GRANT INSERT,UPDATE,SELECT ON TABLE rcliente.tarjeta TO Administrador;
 GRANT INSERT,UPDATE,SELECT ON TABLE manejoproducto.producto TO Administrador;
+GRANT INSERT,UPDATE,SELECT ON TABLE manejoproducto.Inventario TO Administrador;
+
 GRANT INSERT,UPDATE,SELECT ON TABLE ventas.Descripcion TO Administrador;
 GRANT INSERT,UPDATE,SELECT ON TABLE ventas.venta TO Administrador;
 

@@ -1,6 +1,8 @@
 package com.example.app.services;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.app.models.ClienteModel;
 import com.example.app.models.EmpleadoModel;
+import com.example.app.models.TarjetaModel;
 import com.example.app.models.UserModel;
 import com.example.app.repositories.ClienteRepositorie;
 import com.example.app.repositories.EmpleadoRepositorie;
+import com.example.app.repositories.TarjetaRepositorie;
 import com.example.app.repositories.UserRepositorie;
 
 @Service
@@ -26,6 +30,9 @@ public class AdminService {
 
     @Autowired
     UserRepositorie userRepositorie;
+
+    @Autowired
+    TarjetaRepositorie tarjetaRepositorie;
 
     @PersistenceContext
     public EntityManager entityManager;
@@ -69,6 +76,38 @@ public class AdminService {
             return HttpStatus.OK;
         }
         return HttpStatus.BAD_GATEWAY;
+    }
+
+    public void guardarTarjeta(TarjetaModel tarjetaModel){
+        tarjetaRepositorie.save(tarjetaModel);
+    }
+
+    @Transactional
+    public ArrayList<Object[]> Reporte1(){
+        String sql = "SELECT p.Sucursal, p.Nombre AS NombreProducto, d.Producto, SUM(d.Cantidad) AS TotalProductosVendidos " +
+             "FROM ventas.Descripcion AS d " +
+             "JOIN manejoproducto.Producto AS p ON d.Producto = p.Id " +
+             "GROUP BY p.Sucursal, p.Nombre, d.Producto " +
+             "ORDER BY TotalProductosVendidos DESC";
+
+        ArrayList<Object[]> resultado = (ArrayList<Object[]>)entityManager.createNativeQuery(sql)
+        .getResultList();
+        return resultado;
+    }
+    public void Reporte2(){
+        
+    }
+    public void Reporte3(){
+        
+    }
+    public void Reporte4(){
+        
+    }
+    public void Reporte5(){
+        
+    }
+    public void Reporte6(){
+        
     }
 
 }

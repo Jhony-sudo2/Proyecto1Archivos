@@ -12,6 +12,15 @@ public class ClienteModel {
     private String telefono;
     @Id
     private String nit;
+    private double gastado;
+
+    
+    public double getGastado() {
+        return gastado;
+    }
+    public void setGastado(double gastado) {
+        this.gastado = gastado;
+    }
     public String getNombre() {
         return nombre;
     }

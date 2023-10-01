@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.app.models.InventarioModel;
 import com.example.app.models.ProductoModel;
 import com.example.app.services.BodegaService;
 
@@ -30,6 +31,10 @@ public class BodegaController {
         else return HttpStatus.CONFLICT;
     }
 
+    @PostMapping("/add")
+    public HttpStatus AgregarExistencias(@RequestBody InventarioModel inventarioModel){
+        return bodegaService.IngresoProducto(inventarioModel);
+    }
 
     @GetMapping
     public ArrayList<ProductoModel> getProductos(){

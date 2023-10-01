@@ -13,10 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.app.models.ClienteModel;
 import com.example.app.models.DescripcionModel;
 import com.example.app.models.ProductoModel;
+import com.example.app.models.TarjetaModel;
 import com.example.app.models.VentaModel;
 import com.example.app.repositories.ClienteRepositorie;
 import com.example.app.repositories.DescripcionRepositorie;
 import com.example.app.repositories.ProductoRepositorie;
+import com.example.app.repositories.TarjetaRepositorie;
 import com.example.app.repositories.VentaRepositorie;
 
 @Service
@@ -29,14 +31,11 @@ public class CajeroService {
     VentaRepositorie ventaRepositorie;
     @Autowired
     DescripcionRepositorie descripcionRepositorie;
+    @Autowired
+    TarjetaRepositorie tarjetaRepositorie;
 
     @PersistenceContext
     public EntityManager entityManager;
-
-
-    public ProductoModel getPrecio(String Codigo){
-        return productoRepositorie.findById(Codigo).get();
-    }
 
     public HttpStatus IngresarCliente(ClienteModel clienteModel){
         ClienteModel tmp = (ClienteModel)clienteRepositorie.findByNit(clienteModel.getNit());
@@ -46,6 +45,10 @@ public class CajeroService {
         }else{
             return HttpStatus.BAD_GATEWAY;
         }
+    }
+
+    public void ActualizarCliente(ClienteModel clienteModel){
+        clienteRepositorie.save(clienteModel);
     }
 
     public ArrayList<ProductoModel> getProductos(String Sucursal){
@@ -70,6 +73,18 @@ public class CajeroService {
 
     public ArrayList<DescripcionModel> getDescripciones(){
         return (ArrayList<DescripcionModel>) descripcionRepositorie.findAll();
+    }
+
+    public ClienteModel getCliente(String nit){
+        return clienteRepositorie.findByNit(nit);
+    }
+
+    public TarjetaModel getTarjeta(String nit){
+        return tarjetaRepositorie.findByCliente(nit);
+    }
+
+    public void ActualizarTarjeta(TarjetaModel tarjetaModel){
+        tarjetaRepositorie.save(tarjetaModel);
     }
 
 }

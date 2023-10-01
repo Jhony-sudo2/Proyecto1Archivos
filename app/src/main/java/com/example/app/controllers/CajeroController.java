@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.app.models.ClienteModel;
 import com.example.app.models.DescripcionModel;
 import com.example.app.models.ProductoModel;
+import com.example.app.models.TarjetaModel;
 import com.example.app.models.VentaModel;
 import com.example.app.services.CajeroService;
 
@@ -23,15 +25,6 @@ import com.example.app.services.CajeroService;
 public class CajeroController {
     @Autowired
     CajeroService cajeroService;
-
-
-
-    @PostMapping("/Precio")
-    public double getPrecio(@RequestBody String Codigo){
-        System.out.println("RECIBIENDO: " + Codigo);
-        return cajeroService.getPrecio(Codigo).getPrecio();
-    }
-
 
     @PostMapping
     public HttpStatus saveCliente(@RequestBody ClienteModel clienteModel){
@@ -60,6 +53,25 @@ public class CajeroController {
         cajeroService.GuardarVenta(ventaModel);
     }
 
+    @PostMapping("/Cliente")
+    public ClienteModel getCliente(@RequestBody String nit){
+        return cajeroService.getCliente(nit);
+    }
+
+    @PutMapping("/Cliente")
+    public void ActualizarCliente(@RequestBody ClienteModel clienteModel){
+        cajeroService.ActualizarCliente(clienteModel);
+    }
+
+    @PostMapping("/Tarjeta")
+    public TarjetaModel getTarjeta(@RequestBody String nit){
+        return cajeroService.getTarjeta(nit);
+    }
+
+    @PutMapping("/Tarjeta")
+    public void ActualizarTarjeta(@RequestBody TarjetaModel tarjetaModel){
+        cajeroService.ActualizarTarjeta(tarjetaModel);
+    }
 
 
 }

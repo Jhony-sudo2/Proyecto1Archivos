@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.app.models.EmpleadoModel;
 import com.example.app.models.UserModel;
 import com.example.app.services.UserService;
 
@@ -30,6 +31,11 @@ public class UserController {
     @PostMapping
     public UserModel getUser(@RequestBody UserModel usuario){
         return this.userService.getUsuario(usuario);
+    }
+
+    @PostMapping("/empleado")
+    public EmpleadoModel getEmpleado(@RequestBody Integer id){
+        return userService.getEmpleado(id);
     }
    
 
